@@ -1,15 +1,55 @@
+
 from langchain_core.tools import tool, InjectedToolCallId
 from langgraph.types import Command
 from langchain_core.messages import ToolMessage
-from typing import Annotated
+from typing import Annotated, List, Dict
 from langgraph.prebuilt import InjectedState
-
-from deepagents.prompts import (
-    WRITE_TODOS_DESCRIPTION,
-    EDIT_DESCRIPTION,
-    TOOL_DESCRIPTION,
-)
+from deepagents.prompts import WRITE_TODOS_DESCRIPTION, EDIT_DESCRIPTION, TOOL_DESCRIPTION
 from deepagents.state import Todo, DeepAgentState
+import os
+import chromadb
+from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
+
+embeddings = GoogleGenerativeAIEmbeddings(
+    model="models/embedding-001",
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
+
+client = chromadb.PersistentClient(path="./chroma_db")
+collection = client.get_collection("semantic_chunks_gradient_05")
+
+def search(query: str, n_results: int = 5) -> List[Dict]:
+    """Minimal search function for ChromaDB collection"""
+    
+    # Generate query embedding and search
+    query_embedding = embeddings.embed_query(query)
+    results = collection.query(
+        query_embeddings=[query_embedding],
+        n_results=n_results,
+        include=['documents', 'distances', 'metadatas']
+    )
+    
+    # Format results
+    search_results = []
+    if results['documents'] and results['documents'][0]:
+        for i, (doc, distance, metadata) in enumerate(zip(
+            results['documents'][0],
+            results['distances'][0],
+            results['metadatas'][0] if results['metadatas'] else [{}] * len(results['documents'][0])
+        )):
+            search_results.append({
+                'content': doc,
+                'distance': round(distance, 4),
+                'source': metadata.get('source_file', 'Unknown') if metadata else 'Unknown',
+                'json_file': metadata.get('json_file', 'Unknown') if metadata else 'Unknown'
+            })
+    
+    return search_results
+
 
 
 @tool(description=WRITE_TODOS_DESCRIPTION)
