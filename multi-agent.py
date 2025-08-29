@@ -156,7 +156,7 @@ critique_sub_agent = {
     "name": "critique-agent",
     "description": "Used to critique the final report. Give this agent some information about how you want it to critique the report.",
     "prompt": sub_critique_prompt,
-    "model_settings": {
+    "model": {
         "model": "o4-mini",
         "model_provider": "openai"
     }
