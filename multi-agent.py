@@ -20,43 +20,43 @@ collection = client.get_collection("semantic_chunks_gradient_05")
 
 def vector_search(query: str, n_results: int = 5) -> List[Dict]:
     """
-    Minimal search function for ChromaDB collection.
-    Args:
-        query (str): The search query.
-        n_results (int, optional): The number of results to return. Defaults to 5.
-    Returns:
-        List[Dict]: A list of search results, each containing:
-            - content (str): The content of the chunk.
-            - distance (float): The distance score of the chunk.
-            - source (str): The source file of the chunk.
-            - json_file (str): The JSON file associated with the chunk.
-    """
+    Search function with multiple retriever types
     
-    # Generate query embedding and search
-    query_embedding = embeddings.embed_query(query)
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=n_results,
-        include=['documents', 'distances', 'metadatas']
-    )
+    Args:
+        query: Search query
+        n_results: Number of results to return
+        search_type: "semantic", "keyword", or "hybrid"
+    """
+    search_type = "hybrid"  # Change this to "semantic", "keyword", or "hybrid"
+    # Set the number of results for all retrievers
+    vectorstore_retriever.search_kwargs["k"] = n_results
+    keyword_retriever.k = n_results
+    
+    # Choose retriever based on search type
+    if search_type == "semantic":
+        retriever = vectorstore_retriever
+    elif search_type == "keyword":
+        retriever = keyword_retriever
+    else:  # hybrid
+        retriever = ensemble_retriever
+    
+    # Get results
+    results = retriever.get_relevant_documents(query)
     
     # Format results
     search_results = []
-    if results['documents'] and results['documents'][0]:
-        for i, (doc, distance, metadata) in enumerate(zip(
-            results['documents'][0],
-            results['distances'][0],
-            results['metadatas'][0] if results['metadatas'] else [{}] * len(results['documents'][0])
-        )):
-            search_results.append({
-                'content': doc,
-                'distance': round(distance, 4),
-                'source': metadata.get('source_file', 'Unknown') if metadata else 'Unknown',
-                'json_file': metadata.get('json_file', 'Unknown') if metadata else 'Unknown'
-            })
+    for i, doc in enumerate(results[:n_results]):
+        search_results.append({
+            'content': doc.page_content,
+            'source': doc.metadata.get('source_file', 'Unknown'),
+            'json_file': doc.metadata.get('json_file', 'Unknown'),
+            'search_type': search_type,
+            'rank': i + 1
+        })
     
     return search_results
- 
+
+
 # # It's best practice to initialize the client once and reuse it.
 # tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
 
