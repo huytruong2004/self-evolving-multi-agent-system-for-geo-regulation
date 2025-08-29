@@ -16,8 +16,36 @@ embeddings = GoogleGenerativeAIEmbeddings(
     google_api_key=os.getenv("GOOGLE_API_KEY")
 )
 
+# Load all documents from ChromaDB for both retrievers
 client = chromadb.PersistentClient(path="./chroma_db")
 collection = client.get_collection("semantic_chunks_gradient_05")
+
+print("Loading documents for hybrid search...")
+all_results = collection.get(include=['documents', 'metadatas'])
+documents = []
+
+for i, doc in enumerate(all_results['documents']):
+    metadata = all_results['metadatas'][i] if all_results['metadatas'] else {}
+    documents.append(Document(
+        page_content=doc,
+        metadata=metadata or {}
+    ))
+
+# Create vector store retriever
+vectorstore = Chroma.from_documents(documents, embeddings)
+vectorstore_retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
+
+# Create keyword retriever
+keyword_retriever = BM25Retriever.from_documents(documents)
+keyword_retriever.k = 5
+
+# Create ensemble (hybrid) retriever
+ensemble_retriever = EnsembleRetriever(
+    retrievers=[vectorstore_retriever, keyword_retriever],
+    weights=[0.7, 0.3]  # 70% semantic, 30% keyword
+)
+
+print(f"Loaded {len(documents)} documents for hybrid search")
 
 def vector_search(query: str, n_results: int = 5) -> List[Dict]:
     """
