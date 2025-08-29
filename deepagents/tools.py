@@ -11,56 +11,7 @@ import chromadb
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
 
-# Load environment variables
 load_dotenv()
-
-embeddings = GoogleGenerativeAIEmbeddings(
-    model="models/embedding-001",
-    google_api_key=os.getenv("GOOGLE_API_KEY")
-)
-
-client = chromadb.PersistentClient(path="./chroma_db")
-collection = client.get_collection("semantic_chunks_gradient_05")
-
-def search(query: str, n_results: int = 5) -> List[Dict]:
-    """
-    Minimal search function for ChromaDB collection.
-    Args:
-        query (str): The search query.
-        n_results (int, optional): The number of results to return. Defaults to 5.
-    Returns:
-        List[Dict]: A list of search results, each containing:
-            - content (str): The content of the chunk.
-            - distance (float): The distance score of the chunk.
-            - source (str): The source file of the chunk.
-            - json_file (str): The JSON file associated with the chunk.
-    """
-    
-    # Generate query embedding and search
-    query_embedding = embeddings.embed_query(query)
-    results = collection.query(
-        query_embeddings=[query_embedding],
-        n_results=n_results,
-        include=['documents', 'distances', 'metadatas']
-    )
-    
-    # Format results
-    search_results = []
-    if results['documents'] and results['documents'][0]:
-        for i, (doc, distance, metadata) in enumerate(zip(
-            results['documents'][0],
-            results['distances'][0],
-            results['metadatas'][0] if results['metadatas'] else [{}] * len(results['documents'][0])
-        )):
-            search_results.append({
-                'content': doc,
-                'distance': round(distance, 4),
-                'source': metadata.get('source_file', 'Unknown') if metadata else 'Unknown',
-                'json_file': metadata.get('json_file', 'Unknown') if metadata else 'Unknown'
-            })
-    
-    return search_results
-
 
 
 @tool(description=WRITE_TODOS_DESCRIPTION)
