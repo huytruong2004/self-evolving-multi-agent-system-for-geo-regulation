@@ -20,12 +20,16 @@ collection = client.get_collection("semantic_chunks_gradient_05")
 
 def vector_search(query: str, n_results: int = 5) -> List[Dict]:
     """
-    Search function with multiple retriever types
-    
+    Minimal search function for ChromaDB collection.
     Args:
-        query: Search query
-        n_results: Number of results to return
-        search_type: "semantic", "keyword", or "hybrid"
+        query (str): The search query.
+        n_results (int, optional): The number of results to return. Defaults to 5.
+    Returns:
+        List[Dict]: A list of search results, each containing:
+            - content (str): The content of the chunk.
+            - distance (float): The distance score of the chunk.
+            - source (str): The source file of the chunk.
+            - json_file (str): The JSON file associated with the chunk.
     """
     search_type = "hybrid"  # Change this to "semantic", "keyword", or "hybrid"
     # Set the number of results for all retrievers
