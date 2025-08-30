@@ -285,5 +285,4 @@ geoflow_agent = create_deep_agent(
     tools=[vector_search],
     instructions=COMPLIANCE_INSTRUCTIONS,
     subagents=COMPLIANCE_SUBAGENTS,
-    builtin_tools=["write_todos", "write_file", "read_file", "edit_file", "ls"]
 ).with_config({"recursion_limit": 1000})
