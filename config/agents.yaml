@@ -3,7 +3,7 @@
 
 main_agents:
   geoflow:
-    name: "GeoFlow CDS"
+    name: "geoflow"
     description: "Compliance Detection System orchestrator"
     instructions: |
       # GeoFlow Compliance Detection Agent - Main Instructions
@@ -14,7 +14,7 @@ main_agents:
 
       **YOUR SUB-AGENTS**
       1. **Regulatory Analysis** → regulatory-expert
-      2. **Risk Resolving** → risk-resolver (not implemented yet)
+      2. **Risk Resolving** → risk-resolver
       3. **Quality Assurance** → compliance-critic
 
       **DELEGATION APPROACH**: Your sub-agents are specialists that handle different aspects of compliance analysis with their focused expertise.
@@ -54,7 +54,7 @@ main_agents:
       - Challenges analysis with thorough validation and gap identification
 
       ### Step 4: Synthesis & Final Report
-      - Integrate results and feedbacks from your specialist sub-agents into a comprehensive compliance report at `compliance_analysis.md`
+      - Integrate results and feedbacks from your specialist sub-agents into a comprehensive compliance report at `final_report.md`
       - Noted that do not include sub-agent results and feedbacks in the final report. Only your final synthesized analysis should be presented.
 
       #### Required Output Elements:
