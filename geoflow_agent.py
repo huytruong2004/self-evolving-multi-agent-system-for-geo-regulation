@@ -23,7 +23,9 @@ from langchain_chroma import Chroma
 from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
 
-import yaml
+from ruamel.yaml import YAML
+import shutil
+from datetime import datetime
 # from tavily import TavilyClient
 
 # Load environment variables
@@ -67,12 +69,14 @@ print(f"Loaded {len(documents)} documents for hybrid search")
 
 def read_config():
     """Tool to read the config of all the agents"""
+    yaml_handler = YAML()
     with open("config/agents.yaml", "r") as file:
-        return yaml.safe_load(file)
+        return yaml_handler.load(file)
 
 def improve_prompt(agent_name: Literal['geoflow', 'regulatory-expert', 'risk-resolver', 'compliance-critic'], is_main_agent: bool, new_prompt: str):
     """
     Update the system prompt or instructions for a specified agent in the configuration file.
+    Uses ruamel.yaml to preserve YAML formatting including multi-line string literals.
 
     Args:
         agent_name (Literal): The name of the agent to update. Must be one of 'geoflow', 'regulatory-expert', 'risk-resolver', or 'compliance-critic'.
@@ -82,18 +86,54 @@ def improve_prompt(agent_name: Literal['geoflow', 'regulatory-expert', 'risk-res
     Returns:
         str: A message indicating whether the prompt was successfully updated.
     """
-    config = read_config()
+    config_file = "config/agents.yaml"
+    
+    # Create backup with timestamp
+    backup_path = f"config/agents.yaml.backup.{datetime.now().strftime('%Y%m%d_%H%M%S')}"
     try:
+        shutil.copy2(config_file, backup_path)
+    except Exception as e:
+        return f"Error creating backup: {e}"
+    
+    # Initialize ruamel.yaml with formatting preservation
+    yaml_handler = YAML()
+    yaml_handler.preserve_quotes = True
+    yaml_handler.width = 4096  # Prevent line wrapping
+    yaml_handler.map_indent = 2
+    yaml_handler.sequence_indent = 4
+    
+    try:
+        # Load current configuration
+        with open(config_file, "r", encoding='utf-8') as file:
+            config = yaml_handler.load(file)
+        
+        # Update the appropriate field
         if is_main_agent:
+            if 'main_agents' not in config or 'geoflow' not in config['main_agents']:
+                return f"Error: main_agents.geoflow not found in config"
             config['main_agents']['geoflow']['instructions'] = new_prompt
         else:
+            if 'subagents' not in config or agent_name not in config['subagents']:
+                return f"Error: subagents.{agent_name} not found in config"
             config['subagents'][agent_name]['prompt'] = new_prompt
-    except KeyError as e:
-        return f"Error updating prompt for {agent_name}: {e}"
-    with open("config/agents.yaml", "w", encoding='utf-8') as file:
-        yaml.dump(config, file, default_flow_style=False, allow_unicode=True, sort_keys=False)
-    
-    return f"Prompt successfully updated."
+        
+        # Write back with preserved formatting
+        with open(config_file, "w", encoding='utf-8') as file:
+            yaml_handler.dump(config, file)
+        
+        # Validate the written file
+        with open(config_file, "r", encoding='utf-8') as file:
+            yaml_handler.load(file)  # Will raise exception if invalid
+            
+        return f"Prompt successfully updated for {agent_name}. Backup created: {backup_path}"
+        
+    except Exception as e:
+        # Restore from backup if something went wrong
+        try:
+            shutil.copy2(backup_path, config_file)
+            return f"Error updating prompt: {e}. Configuration restored from backup."
+        except Exception as restore_error:
+            return f"Critical error: Failed to update prompt ({e}) and failed to restore backup ({restore_error})"
 
 
 def vector_search(query: str, n_results: int = 10) -> List[Dict]:

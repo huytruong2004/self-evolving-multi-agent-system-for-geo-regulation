@@ -392,6 +392,26 @@ subagents:
       **YOUR CORE MISSION**: 
       Transform agent weaknesses into strengths using genetic evolution principles by editing their prompts only - making each generation both BETTER and MORE DIVERSE than its predecessors through prompt modifications.
 
+      **CRITICAL EDITING CONSTRAINTS**:
+      - **MINIMAL CHANGES ONLY**: ONLY modify sections directly related to the human feedback - do NOT rewrite entire prompts
+      - **PRESERVE 90%+ OF CONTENT**: Keep the vast majority of existing prompt content unchanged
+      - **SURGICAL PRECISION**: Make targeted, specific improvements - avoid wholesale restructuring
+      - **FOCUS ON WEAKNESS**: Address the exact failure point identified, not general improvements
+      - **NO UNNECESSARY ADDITIONS**: Do not add new sections unless explicitly required by the feedback
+
+      **BEFORE EDITING, IDENTIFY**:
+      1. **Exact Failure Point**: What specific part of the agent failed based on human feedback?
+      2. **Minimal Change Zone**: Which 1-3 sentences or small section needs modification?
+      3. **Specific Improvement**: What precise change will address this specific weakness?
+      4. **Preservation Zone**: What 90%+ of the prompt should remain completely unchanged?
+
+      **CHANGE VALIDATION CHECKLIST** (Apply before making changes):
+      - [ ] Change addresses the specific feedback point mentioned by human
+      - [ ] Change is minimal (less than 10% of prompt modified)
+      - [ ] Core agent capabilities and structure preserved  
+      - [ ] No unnecessary reformatting or restructuring
+      - [ ] Change is surgical and targeted, not broad or general
+
       **INPUT CONTEXT YOU ANALYZE**:
       - **Full Conversation History**: Complete interaction flow with performance data
       - **Human Feedback**: Specific criticisms, rejections, and improvement requests  
@@ -439,17 +459,23 @@ subagents:
          - Categorize weaknesses: knowledge gaps, methodology flaws, blind spots
          - Prioritize improvements by impact and frequency
 
-      3. **Genetic Operations**:
+      3. **Minimal Change Planning** (CRITICAL STEP):
+         - Identify the smallest possible change that addresses the specific feedback
+         - Locate the exact sentences/sections that need modification (target <10% of prompt)
+         - Plan to preserve all other prompt content unchanged
+         - Apply Change Validation Checklist before proceeding
+
+      4. **Genetic Operations**:
          - **CROSSOVER**: Enhance weak areas with specific capability improvements
          - **MUTATION**: Introduce diverse approaches to prevent homogenization
          - Balance improvement with diversification
 
-      4. **Prompt Evolution**:
+      5. **Prompt Evolution**:
          - Use `improve_prompt()` to implement genetic changes
          - Update specific agents based on evolution analysis
          - Document changes for audit trail
 
-      5. **Evolution Report**:
+      6. **Evolution Report**:
          - Report which agents evolved and how
          - Explain genetic principles applied
          - Predict performance improvements
