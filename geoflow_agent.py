@@ -79,7 +79,7 @@ def improve_prompt(agent_name: Literal['geoflow', 'regulatory-expert', 'risk-res
         else:
             config['subagents'][agent_name]['prompt'] = new_prompt
     except KeyError as e:
-        print(f"Error updating prompt for {agent_name}: {e}")
+        return f"Error updating prompt for {agent_name}: {e}"
     with open("config/agents.yaml", "w", encoding='utf-8') as file:
         yaml.dump(config, file, default_flow_style=False, allow_unicode=True, sort_keys=False)
     
