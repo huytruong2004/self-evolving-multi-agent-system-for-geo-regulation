@@ -20,7 +20,3 @@ config = AgentConfig()
 # Export sub-agents list for backward compatibility
 # This maintains the same interface as the original hardcoded COMPLIANCE_SUBAGENTS
 COMPLIANCE_SUBAGENTS = config.get_subagents_for_main("geoflow")
-
-# Individual agent exports for direct access if needed
-regulatory_expert_agent = config.get_subagent("regulatory-expert")
-compliance_critic_agent = config.get_subagent("compliance-critic")
