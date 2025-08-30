@@ -23,7 +23,7 @@ from langchain_chroma import Chroma
 from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
 
-from tavily import TavilyClient
+# from tavily import TavilyClient
 
 # Load environment variables
 load_dotenv()
@@ -107,23 +107,23 @@ def vector_search(query: str, n_results: int = 10) -> List[Dict]:
     return search_results
 
 
-tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
+# tavily_client = TavilyClient(api_key=os.environ["TAVILY_API_KEY"])
 
-# Search tool to use to do research
-def internet_search(
-    query: str,
-    max_results: int = 5,
-    topic: Literal["general", "news"] = "general",
-    include_raw_content: bool = False,
-):
-    """Run a web search"""
-    search_docs = tavily_client.search(
-        query,
-        max_results=max_results,
-        include_raw_content=include_raw_content,
-        topic=topic,
-    )
-    return search_docs
+# # Search tool to use to do research
+# def internet_search(
+#     query: str,
+#     max_results: int = 5,
+#     topic: Literal["general", "news"] = "general",
+#     include_raw_content: bool = False,
+# ):
+#     """Run a web search"""
+#     search_docs = tavily_client.search(
+#         query,
+#         max_results=max_results,
+#         include_raw_content=include_raw_content,
+#         topic=topic,
+#     )
+#     return search_docs
 
 
 # Evolution-based compliance instructions (embedded)
@@ -260,7 +260,6 @@ When analyzing features, use these standardized terms:
 ## Available Tools
 
 ### Your Limited Tools (Appropriate for orchestrator role)
-- **internet_search**: Search the web for information with specific topic, only general and news topic are allowed.
 - **File Management Tools**: write_file, read_file, edit_file for documentation
 - **write_todos**: Track your analysis progress and delegation decisions
 
@@ -296,7 +295,7 @@ When analyzing features, use these standardized terms:
 
 # Create the GeoFlow CDS main agent
 geoflow_agent = create_deep_agent(
-    tools=[vector_search, internet_search],
+    tools=[vector_search],
     instructions=COMPLIANCE_INSTRUCTIONS,
     subagents=COMPLIANCE_SUBAGENTS,
     builtin_tools=["write_todos", "write_file", "read_file", "edit_file", "ls"]
