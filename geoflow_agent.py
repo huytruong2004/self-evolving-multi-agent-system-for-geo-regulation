@@ -237,25 +237,25 @@ Your analysis must cover these specific compliance domains using the indexed reg
 
 When analyzing features, use these standardized terms:
 
-- **NR**: Not recommended (compliance violation risk)
-- **PF**: Personalized feed (algorithmic content delivery)
-- **GH**: Geo-handler (geographic routing module)
-- **CDS**: Compliance Detection System (this system)
-- **DRT**: Data retention threshold (log storage duration)
-- **LCP**: Local compliance policy (jurisdiction-specific rules)
-- **Redline**: Flag for legal review (compliance escalation)
-- **Softblock**: Silent user limitation (compliance enforcement)
-- **ShadowMode**: Analytics-only deployment (compliance testing)
-- **T5**: Tier 5 sensitivity data (highest protection level)
-- **ASL**: Age-sensitive logic (minor account handling)
-- **Glow**: Compliance-flagging status (geo-alert indicator)
-- **NSP**: Non-shareable policy (content restriction)
-- **Jellybean**: Parental control system (child safety)
-- **EchoTrace**: Log tracing mode (compliance audit trail)
-- **BB**: Baseline Behavior (anomaly detection standard)
+- **NR**: Not recommended
+- **PF**: Personalized feed
+- **GH**: Geo-handler
+- **CDS**: Compliance Detection System
+- **DRT**: Data retention threshold
+- **LCP**: Local compliance policy
+- **Redline**: Flag for legal review
+- **Softblock**: Silent user limitation
+- **ShadowMode**: Analytics-only deployment
+- **T5**: Tier 5 sensitivity data
+- **ASL**: Age-sensitive logic
+- **Glow**: Compliance-flagging status
+- **NSP**: Non-shareable policy
+- **Jellybean**: Parental control system
+- **EchoTrace**: Log tracing mode
+- **BB**: Baseline Behavior
 - **Snowcap**: Child safety policy framework
-- **FR**: Feature rollout status (deployment tracking)
-- **IMT**: Internal monitoring trigger (compliance alert)
+- **FR**: Feature rollout status
+- **IMT**: Internal monitoring trigger
 
 ## Available Tools
 
