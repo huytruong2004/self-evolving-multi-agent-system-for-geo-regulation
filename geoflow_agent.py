@@ -300,37 +300,3 @@ geoflow_agent = create_deep_agent(
     subagents=COMPLIANCE_SUBAGENTS,
     builtin_tools=["write_todos", "write_file", "read_file", "edit_file", "ls"]
 ).with_config({"recursion_limit": 1000})
-
-# Main analysis function
-def analyze_feature_compliance(feature_name: str, feature_description: str, 
-                             related_documents: list = None) -> dict:
-    """
-    Analyze a feature for geo-compliance requirements using the evolved agent system.
-    
-    Args:
-        feature_name: Name/identifier of the feature
-        feature_description: Detailed feature functionality description
-        related_documents: List of related PRD/TRD documents (optional)
-    
-    Returns:
-        Complete compliance analysis with flag, reasoning, regulations, and audit trail
-    """
-    
-    analysis_prompt = f"""
-    Analyze this feature for geo-compliance requirements:
-    
-    **Feature Name:** {feature_name}
-    
-    **Feature Description:** {feature_description}
-    
-    **Related Documents:** {related_documents if related_documents else 'None provided'}
-    
-    Provide complete compliance analysis following the GeoFlow CDS framework.
-    Delegate to your evolved sub-agents and provide comprehensive analysis.
-    """
-    
-    result = geoflow_agent.invoke({
-        "messages": [{"role": "user", "content": analysis_prompt}]
-    })
-    
-    return result
