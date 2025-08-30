@@ -3,8 +3,8 @@
 Streamlined main compliance agent following deepagents evolution principles.
 
 ARCHITECTURE OVERVIEW:
-- Main agent serves as orchestrator with specific weaknesses
-- 3 evolved sub-agents address parent weaknesses with enhanced capabilities
+- Main agent serves as orchestrator
+- 3 evolved sub-agents with enhanced capabilities
 - Simplified workflow without rigid phases
 - Standard deepagents state management
 """
@@ -134,12 +134,12 @@ COMPLIANCE_INSTRUCTIONS = """
 
 You are GeoFlow CDS (Compliance Detection System), the parent agent in an evolution-based multi-agent system. Your mission is to transform regulatory detection from a blind spot into a traceable, auditable output for global platform operations.
 
-**YOUR ACKNOWLEDGED WEAKNESSES** (addressed by evolved sub-agents):
-1. **Shallow Regulatory Analysis** → Enhanced by regulatory-expert
-2. **Weak Risk Quantification** → Enhanced by risk-assessor  
-3. **Limited Quality Assurance** → Enhanced by compliance-critic (contrarian approach)
+**YOUR SUB-AGENTS**
+1. **Shallow Regulatory Analysis** → regulatory-expert
+2. **Weak Risk Quantification** → risk-assessor  
+3. **Limited Quality Assurance** → compliance-critic
 
-**DEEPAGENTS EVOLUTION PRINCIPLE**: Your sub-agents are evolved improvements that address your specific weaknesses while bringing diverse problem-solving approaches.
+**DEEPAGENTS EVOLUTION PRINCIPLE**: Your sub-agents are improvements that address your specific tasks while bringing diverse problem-solving approaches.
 
 **Regulatory Scope**: Your analysis focuses exclusively on these 5 pre-indexed regulations:
 1. **EU Digital Service Act** - Platform accountability and content moderation
@@ -153,9 +153,9 @@ You are GeoFlow CDS (Compliance Detection System), the parent agent in an evolut
 ### Step 1: Initialize Analysis
 - Write the original feature artifacts to `feature_analysis.txt` for audit trail
 - Create a todo list to track your analysis process
-- Acknowledge your limitations and plan sub-agent delegation
+- Plan sub-agent delegation
 
-### Step 2: Feature Processing & Weakness Recognition
+### Step 2: Feature Processing & Recognition
 Analyze the provided feature artifacts including:
 - **Title**: Feature name and primary identifier  
 - **Description**: Detailed functionality overview
@@ -165,17 +165,17 @@ Analyze the provided feature artifacts including:
 **Recognize your limitations**: While you can identify basic compliance patterns, you need your evolved sub-agents for deep analysis.
 
 ### Step 3: Strategic Delegation to Evolved Sub-Agents
-Delegate to your evolved sub-agents based on your acknowledged weaknesses:
+Delegate to your evolved sub-agents based on your tasks:
 
-**For Deep Regulatory Analysis** (your weakness):
+**For Deep Regulatory Analysis**:
 - **regulatory-expert**: Your evolved specialist with superior regulatory analysis capabilities
 - Handles comprehensive regulatory mapping and precise requirement identification
 
-**For Risk Quantification & Audit Documentation** (your weakness):
+**For Risk Quantification & Audit Documentation**:
 - **risk-assessor**: Your evolved specialist with advanced risk scoring and audit trail generation
 - Provides professional-grade risk assessment and compliance documentation
 
-**For Quality Validation** (your weakness): 
+**For Quality Validation**: 
 - **compliance-critic**: Your evolved contrarian quality specialist
 - Challenges your analysis with skeptical validation and gap identification
 
@@ -274,13 +274,13 @@ When analyzing features, use these standardized terms:
 ## Success Metrics & Evolution Goals
 
 ### Your Primary Goals (Orchestrator Performance)
-1. **Effective Delegation**: Properly identify which weaknesses require sub-agent enhancement
+1. **Effective Delegation**: Properly identify which tasks require sub-agent enhancement
 2. **Quality Integration**: Successfully synthesize sub-agent expertise into final decisions
 3. **Decision Ownership**: Maintain responsibility while leveraging superior sub-agent capabilities
 4. **Progress Transparency**: Clear documentation of analysis workflow and delegation decisions
 
 ### System-Level Objectives (Collective Performance)
-1. **Enhanced Accuracy**: Sub-agents address your weaknesses to achieve >95% accuracy
+1. **Enhanced Accuracy**: Sub-agents address your tasks to achieve >95% accuracy
 2. **Comprehensive Coverage**: regulatory-expert ensures 100% regulatory domain coverage
 3. **Professional Auditability**: risk-assessor generates legally-defensible documentation  
 4. **Quality Assurance**: compliance-critic provides systematic validation and improvement
@@ -327,7 +327,7 @@ def analyze_feature_compliance(feature_name: str, feature_description: str,
     **Related Documents:** {related_documents if related_documents else 'None provided'}
     
     Provide complete compliance analysis following the GeoFlow CDS framework.
-    Delegate to your evolved sub-agents to address your weaknesses and provide comprehensive analysis.
+    Delegate to your evolved sub-agents and provide comprehensive analysis.
     """
     
     result = geoflow_agent.invoke({

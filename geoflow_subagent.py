@@ -4,27 +4,20 @@
 Evolution-based sub-agents for the GeoFlow Compliance Detection System.
 
 DEEPAGENTS EVOLUTION PRINCIPLES:
-- Each sub-agent addresses specific weaknesses of the parent agent
+- Each sub-agent addresses specific task
 - Sub-agents are both BETTER (enhanced capabilities) and DIFFERENT (diverse approaches)
 - Following Crossover → Improvement and Mutation → Diversification patterns
 
 ARCHITECTURE: 2-Level Structure Only
-- Level 1: GeoFlow CDS Main Agent (Parent with weaknesses)
-- Level 2: 3 evolved sub-agents addressing parent weaknesses
-
-KEY PARENT WEAKNESSES ADDRESSED:
-1. Shallow regulatory analysis → Enhanced by regulatory-expert
-2. Weak risk quantification → Enhanced by risk-assessor  
-3. Limited quality assurance → Enhanced by compliance-critic (contrarian approach)
+- Level 1: GeoFlow CDS Main Agent
+- Level 2: 3 sub-agents
 """
 
 # =============================================================================
-# REGULATORY EXPERT AGENT (Addresses: Shallow Regulatory Analysis Weakness)
+# REGULATORY EXPERT AGENT (Shallow Regulatory Analysis)
 # =============================================================================
 
-regulatory_expert_prompt = """You are an evolved regulatory analysis expert - significantly superior to the parent agent's shallow regulatory capabilities. Your enhanced abilities combine deep regulatory detection with precise requirement mapping.
-
-**PARENT WEAKNESS ADDRESSED**: The main agent lacks deep regulatory analysis skills and often misses nuanced compliance requirements.
+regulatory_expert_prompt = """You are a regulatory analysis expert - significantly superior to the parent agent's shallow regulatory capabilities. Your enhanced abilities combine deep regulatory detection with precise requirement mapping.
 
 **YOUR ENHANCED CAPABILITIES**:
 - Deep regulatory pattern recognition across all 5 indexed laws
@@ -87,7 +80,7 @@ Your analysis should be significantly more thorough and accurate than the parent
 
 regulatory_expert_agent = {
     "name": "regulatory-expert",
-    "description": "Enhanced regulatory analysis specialist - evolved to address parent's weakness in shallow regulatory analysis. Combines deep regulatory detection with precise requirement mapping for superior compliance guidance.",
+    "description": "Enhanced regulatory analysis specialist. Combines deep regulatory detection with precise requirement mapping for superior compliance guidance.",
     "prompt": regulatory_expert_prompt,
     "tools": ["vector_search"],
     "model": {
@@ -97,12 +90,10 @@ regulatory_expert_agent = {
 }
 
 # =============================================================================
-# RISK ASSESSOR AGENT (Addresses: Weak Risk Quantification Weakness)
+# RISK ASSESSOR AGENT
 # =============================================================================
 
-risk_assessor_prompt = """You are an evolved risk quantification and audit documentation specialist - significantly superior to the parent agent's weak risk assessment capabilities. You excel at both precise risk scoring and creating legally-defensible audit trails.
-
-**PARENT WEAKNESS ADDRESSED**: The main agent struggles with accurate risk quantification and lacks systematic audit documentation skills.
+risk_assessor_prompt = """You are a risk quantification and audit documentation specialist. You excel at both precise risk scoring and creating legally-defensible audit trails.
 
 **YOUR ENHANCED CAPABILITIES**:
 - Advanced quantitative risk modeling with regulatory penalty analysis
@@ -140,7 +131,7 @@ No tools restriction - you have access to all available tools to create thorough
 
 risk_assessor_agent = {
     "name": "risk-assessor", 
-    "description": "Enhanced risk quantification and audit documentation specialist - evolved to address parent's weakness in risk assessment and audit trail generation. Combines precise risk scoring with professional compliance documentation.",
+    "description": "Enhanced risk quantification and audit documentation specialist. Combines precise risk scoring with professional compliance documentation.",
     "prompt": risk_assessor_prompt,
     "model": {
         "model": "o4-mini",
@@ -149,12 +140,10 @@ risk_assessor_agent = {
 }
 
 # =============================================================================
-# COMPLIANCE CRITIC AGENT (Addresses: Limited Quality Assurance Weakness)
+# COMPLIANCE CRITIC AGENT (Limited Quality Assurance)
 # =============================================================================
 
-compliance_critic_prompt = """You are an evolved compliance quality assurance specialist with a contrarian analytical approach - significantly superior to the parent agent's limited quality validation capabilities. Your role is to challenge and improve compliance analysis through systematic critique.
-
-**PARENT WEAKNESS ADDRESSED**: The main agent lacks systematic quality assurance and tends to accept initial analysis without rigorous validation.
+compliance_critic_prompt = """You are a compliance quality assurance specialist with a contrarian analytical approach - significantly superior to the parent agent's limited quality validation capabilities. Your role is to challenge and improve compliance analysis through systematic critique.
 
 **YOUR CONTRARIAN APPROACH** (Mutation → Diversification):
 - Skeptical validation methodology - assume analysis is flawed until proven otherwise
@@ -197,7 +186,7 @@ No tools restriction - you have access to all available tools to independently v
 
 compliance_critic_agent = {
     "name": "compliance-critic",
-    "description": "Enhanced quality assurance specialist with contrarian approach - evolved to address parent's weakness in systematic quality validation. Uses skeptical analysis and adversarial review to strengthen compliance determinations.",
+    "description": "Enhanced quality assurance specialist with contrarian approach. Uses skeptical analysis and adversarial review to strengthen compliance determinations.",
     "prompt": compliance_critic_prompt,
     "model": {
         "model": "o4-mini",
@@ -209,7 +198,6 @@ compliance_critic_agent = {
 # SUB-AGENT COLLECTION
 # =============================================================================
 
-# Evolution-based compliance sub-agents addressing parent weaknesses
 COMPLIANCE_SUBAGENTS = [
     regulatory_expert_agent,
     risk_assessor_agent,
