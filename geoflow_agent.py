@@ -71,7 +71,17 @@ def read_config():
         return yaml.safe_load(file)
 
 def improve_prompt(agent_name: Literal['geoflow', 'regulatory-expert', 'risk-resolver', 'compliance-critic'], is_main_agent: bool, new_prompt: str):
-    """Tool for editing the system prompt of an agent"""
+    """
+    Update the system prompt or instructions for a specified agent in the configuration file.
+
+    Args:
+        agent_name (Literal): The name of the agent to update. Must be one of 'geoflow', 'regulatory-expert', 'risk-resolver', or 'compliance-critic'.
+        is_main_agent (bool): True if changing the main agent, False if changing the subagent.
+        new_prompt (str): The new prompt or instructions to set for the agent.
+
+    Returns:
+        str: A message indicating whether the prompt was successfully updated.
+    """
     config = read_config()
     try:
         if is_main_agent:
