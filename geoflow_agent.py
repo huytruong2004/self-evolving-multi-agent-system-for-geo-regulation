@@ -23,6 +23,7 @@ from langchain_chroma import Chroma
 from langchain_community.retrievers import BM25Retriever
 from langchain.retrievers import EnsembleRetriever
 
+import yaml
 # from tavily import TavilyClient
 
 # Load environment variables
@@ -63,6 +64,27 @@ ensemble_retriever = EnsembleRetriever(
 )
 
 print(f"Loaded {len(documents)} documents for hybrid search")
+
+def read_config():
+    """Tool to read the config of all the agents"""
+    with open("config/agents.yaml", "r") as file:
+        return yaml.safe_load(file)
+
+def improve_prompt(agent_name: Literal['geoflow', 'regulatory-expert', 'risk-resolver', 'compliance-critic'], is_main_agent: bool, new_prompt: str):
+    """Tool for editing the system prompt of an agent"""
+    config = read_config()
+    try:
+        if is_main_agent:
+            config['main_agents']['geoflow']['instructions'] = new_prompt
+        else:
+            config['subagents'][agent_name]['prompt'] = new_prompt
+    except KeyError as e:
+        print(f"Error updating prompt for {agent_name}: {e}")
+    with open("config/agents.yaml", "w", encoding='utf-8') as file:
+        yaml.dump(config, file, default_flow_style=False, allow_unicode=True, sort_keys=False)
+    
+    return f"Prompt successfully updated."
+
 
 def vector_search(query: str, n_results: int = 10) -> List[Dict]:
     """
