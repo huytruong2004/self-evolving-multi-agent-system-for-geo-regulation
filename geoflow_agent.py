@@ -165,7 +165,7 @@ subagents = config.get_subagents_for_main("geoflow")
 
 # Create the GeoFlow CDS main agent
 geoflow_agent = create_deep_agent(
-    tools=[vector_search],
+    tools=[vector_search, read_config, improve_prompt],
     instructions=geoflow_config["instructions"],
     subagents=subagents,
 ).with_config({"recursion_limit": geoflow_config["recursion_limit"]})
