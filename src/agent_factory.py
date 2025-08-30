@@ -89,9 +89,3 @@ def create_geoflow_agent(config_path: str = "config/agents.yaml", agent_name: st
     """
     factory = AgentFactory(config_path, agent_name)
     return factory.create_agent()
-
-
-# Example usage
-if __name__ == "__main__":
-    agent = create_geoflow_agent("config/agents.yaml", "geoflow")
-    print("✅ Agent created successfully!")
