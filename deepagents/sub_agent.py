@@ -73,6 +73,7 @@ def _create_task_tool(tools, instructions, subagents: list[SubAgent], model, sta
         result = await sub_agent.ainvoke(state)
         return Command(
             update={
+                "todos": state.get("todos", []),
                 "files": result.get("files", {}),
                 "messages": [
                     ToolMessage(

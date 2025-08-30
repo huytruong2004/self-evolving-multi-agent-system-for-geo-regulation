@@ -2,6 +2,7 @@ tavily-python
 langchain-openai
 langchain-core
 langchain
+langchain-chroma
 langgraph
 typing-extensions
 python-dotenv

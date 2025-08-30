@@ -1,7 +1,7 @@
 {
   "dependencies": ["."],
   "graphs": {
-    "GeoFlow": "./multi-agent.py:agent"
+    "GeoFlow": "./geoflow_agent.py:geoflow_agent"
   },
   "env": ".env"
 }
