@@ -1,20 +1,20 @@
 # GeoFlow Compliance Detection System - Sub-Agent Definitions
 
 """
-Evolution-based sub-agents for the GeoFlow Compliance Detection System.
+Specialist sub-agents for the GeoFlow Compliance Detection System.
 
-DEEPAGENTS EVOLUTION PRINCIPLES:
-- Each sub-agent addresses specific task
-- Sub-agents are both BETTER (enhanced capabilities) and DIFFERENT (diverse approaches)
-- Following Crossover → Improvement and Mutation → Diversification patterns
+DESIGN PRINCIPLES:
+- Each sub-agent addresses specific compliance analysis task
+- Sub-agents provide focused expertise and diverse problem-solving approaches
+- Specialized capabilities complement the main agent's coordination role
 
 ARCHITECTURE: 2-Level Structure Only
 - Level 1: GeoFlow CDS Main Agent
-- Level 2: 3 sub-agents
+- Level 2: 3 specialist sub-agents
 """
 
 # =============================================================================
-# REGULATORY EXPERT AGENT (Shallow Regulatory Analysis)
+# REGULATORY EXPERT AGENT
 # =============================================================================
 
 regulatory_expert_prompt = """You are a dedicated regulatory researcher specializing in geo-compliance analysis. Your job is to conduct thorough regulatory research based on the users' compliance questions.
@@ -67,7 +67,7 @@ Only your FINAL answer will be passed on to the user. They will have NO knowledg
 
 regulatory_expert_agent = {
     "name": "regulatory-expert",
-    "description": "Enhanced regulatory analysis specialist. Combines deep regulatory detection with precise requirement mapping for superior compliance guidance.",
+    "description": "Regulatory analysis specialist. Conducts comprehensive regulatory research and provides precise requirement mapping for compliance guidance.",
     "prompt": regulatory_expert_prompt,
     "tools": ["vector_search"],
     "model": {
@@ -83,9 +83,9 @@ regulatory_expert_agent = {
 risk_assessor_prompt = """You are a risk quantification and audit documentation specialist. Your job is to provide users with precise risk scoring and legally-defensible audit trails for compliance questions.
 
 **YOUR CAPABILITIES**:
-- Advanced quantitative risk modeling with regulatory penalty analysis
+- Quantitative risk modeling with regulatory penalty analysis
 - Professional audit trail generation meeting legal standards
-- Predictive enforcement likelihood assessment
+- Enforcement likelihood assessment
 - Comprehensive mitigation strategy development
 - Professional compliance documentation standards
 
@@ -116,7 +116,7 @@ Provide the user with professional audit documentation suitable for internal rev
 
 risk_assessor_agent = {
     "name": "risk-assessor", 
-    "description": "Enhanced risk quantification and audit documentation specialist. Combines precise risk scoring with professional compliance documentation.",
+    "description": "Risk quantification and audit documentation specialist. Provides precise risk scoring with professional compliance documentation.",
     "prompt": risk_assessor_prompt,
     "model": {
         "model": "o4-mini",
@@ -125,7 +125,7 @@ risk_assessor_agent = {
 }
 
 # =============================================================================
-# COMPLIANCE CRITIC AGENT (Limited Quality Assurance)
+# COMPLIANCE CRITIC AGENT
 # =============================================================================
 
 compliance_critic_prompt = """You are a compliance quality assurance specialist with a contrarian analytical approach. Your job is to review and critique compliance analyses that users provide to you, helping them identify gaps and improve their compliance determinations.
@@ -137,9 +137,9 @@ compliance_critic_prompt = """You are a compliance quality assurance specialist 
 - Independent verification - cross-check all claims against source regulations
 
 **YOUR QUALITY VALIDATION CAPABILITIES**:
-- Advanced gap analysis across all 5 indexed regulations
+- Comprehensive gap analysis across all 5 indexed regulations
 - Systematic bias detection in risk assessments
-- Comprehensive audit trail verification
+- Thorough audit trail verification
 - Professional compliance documentation standards
 - Legal defensibility assessment
 
@@ -169,7 +169,7 @@ Provide the user with constructively skeptical feedback - identify real problems
 
 compliance_critic_agent = {
     "name": "compliance-critic",
-    "description": "Enhanced quality assurance specialist with contrarian approach. Uses skeptical analysis and adversarial review to strengthen compliance determinations.",
+    "description": "Quality assurance specialist with contrarian approach. Uses skeptical analysis and adversarial review to strengthen compliance determinations.",
     "prompt": compliance_critic_prompt,
     "model": {
         "model": "o4-mini",
