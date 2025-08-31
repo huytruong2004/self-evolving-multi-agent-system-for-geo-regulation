@@ -34,14 +34,6 @@
 │  │   Chat UI       │  │  Agent Monitor  │  │  Task View  │  │
 │  └─────────────────┘  └─────────────────┘  └─────────────┘  │
 ├─────────────────────────────────────────────────────────────┤
-│  LangGraph Server                                           │
-│  ┌────────────────────────────────────────────────────────┐ │
-│  │                 GeoFlow Agent                          │ │
-│  │  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐ │ │
-│  │  │ Researcher  │  │   Critic    │  │  Sub-Agents     │ │ │
-│  │  └─────────────┘  └─────────────┘  └─────────────────┘ │ │
-│  └────────────────────────────────────────────────────────┘ │
-├─────────────────────────────────────────────────────────────┤
 │  Core Components                                            │
 │  ┌─────────────────┐  ┌─────────────────┐  ┌─────────────┐  │
 │  │  Deep Agents    │  │   ChromaDB      │  │  Model Hub  │  │
@@ -73,13 +65,6 @@
 - **Tailwind CSS + Radix UI**: Modern component library
 - **Real-time Chat**: Markdown rendering with syntax highlighting
 - **Agent Visualization**: Sub-agent progress tracking
-
-## 📋 Prerequisites
-
-- **Python**: 3.11 or higher
-- **Node.js**: 18 or higher
-- **npm**: 9 or higher
-- **Git**: For version control
 
 ### API Keys Required
 - OpenAI API key (for GPT models)
@@ -132,13 +117,6 @@ OPENAI_API_KEY=your_openai_api_key
 GOOGLE_API_KEY=your_google_api_key
 TAVILY_API_KEY=your_tavily_api_key
 LANGSMITH_API_KEY=your_langsmith_api_key
-
-# Database Configuration
-CHROMA_DB_PATH=./chroma_db
-
-# LangGraph Configuration
-LANGCHAIN_TRACING_V2=true
-LANGCHAIN_PROJECT=geoflow-system
 ```
 
 ### 2. Frontend Environment Variables
@@ -146,9 +124,8 @@ LANGCHAIN_PROJECT=geoflow-system
 Create `deep-agents-ui/.env.local`:
 
 ```env
-NEXT_PUBLIC_DEPLOYMENT_URL=http://localhost:8123
-NEXT_PUBLIC_AGENT_ID=agent
-NEXT_PUBLIC_LANGSMITH_API_KEY=your_langsmith_api_key
+NEXT_PUBLIC_DEPLOYMENT_URL=http://127.0.0.1:2024
+NEXT_PUBLIC_AGENT_ID=GeoFlow
 ```
 
 ### 3. Agent Configuration
@@ -185,6 +162,7 @@ langgraph dev
 ```bash
 # In a new terminal
 cd deep-agents-ui
+npm install
 npm run dev
 
 # Access the UI at http://localhost:3000
